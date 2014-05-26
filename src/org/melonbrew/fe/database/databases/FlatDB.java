@@ -10,10 +10,11 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map.Entry;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.melonbrew.fe.Fe;
@@ -24,6 +25,7 @@ public class FlatDB extends Database {
 	private Fe plugin;
 	private HashMap<String, Double> accounts = new HashMap<String, Double>();
 	private File file;
+	private boolean lock = false;
 	private boolean write = false;
 
 	public FlatDB(Fe plugin){
@@ -48,15 +50,28 @@ public class FlatDB extends Database {
 			try {
 				Scanner sc = new Scanner(file);
 				int i = 0;
+				int errors = 0;
 				while(sc.hasNextLine()){
 					String str = sc.nextLine();
 					if (!str.isEmpty()) {
-						String[] split = str.split(":");
-						accounts.put(split[0], Double.valueOf(split[1]));
-						i++;
+						String[] split = split(str);
+						if (split.length == 2) {
+							try {
+								accounts.put(split[0], Double.valueOf(split[1]));
+								i++;
+							}
+							catch (NumberFormatException e) {
+								plugin.log("Error on line " + (i + errors) + ": number excepted");
+								errors++;
+							}
+						}
+						else {
+							plugin.log("Error on line " + (i + errors) + ": too many arguments");
+							errors++;
+						}
 					}
 				}
-				plugin.log(i + " accounts loaded");
+				plugin.log(i + " accounts " + ((errors != 0) ? "loaded with " + errors + " errors:" : "successfully loaded"));
 				sc.close();
 			} catch (FileNotFoundException e) {
 				plugin.log("Error while loading flat database (file reading): " + e.getMessage());
@@ -67,7 +82,8 @@ public class FlatDB extends Database {
 			public void run() {
 				if (write) {
 					write = false;
-					if (file.canWrite()) {
+					if (file.canWrite() && !isLock()) {
+						lock();
 						BufferedWriter out = null;
 						try {
 							out = new BufferedWriter(new FileWriter(file, false));
@@ -85,8 +101,8 @@ public class FlatDB extends Database {
 									plugin.log("Error while loading flat database (file closing): " + e.getMessage());
 								}
 							}
+							unlock();
 						}
-
 					}
 				}
 			}
@@ -160,5 +176,32 @@ public class FlatDB extends Database {
 	@Override
 	public void close() {
 
+	}
+	
+	private String[] split(String str) {
+		Pattern p = Pattern.compile("^(.*):([\\d\\.]+)$");
+		Matcher m = p.matcher(str);
+		if (m.find()) {
+		  return new String[] {m.group(1), m.group(2)};
+		}
+		else {
+			String[] strArray = str.split(":");
+			String[] split = {strArray[0], strArray[strArray.length - 1]};
+			for (int i = 0; i < strArray.length - 2; i++)
+				split[0] += ":";
+			return split;
+		}
+	}
+
+	private boolean isLock() {
+		return lock;
+	}
+
+	private void lock() {
+		lock = true;
+	}
+
+	private void unlock() {
+		lock = false;
 	}
 }
