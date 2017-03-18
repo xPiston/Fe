@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.melonbrew.fe.bungee.FeMessageListener;
+import org.melonbrew.fe.bungee.Synchronization;
 import org.melonbrew.fe.database.Account;
 import org.melonbrew.fe.database.Database;
 import org.melonbrew.fe.database.databases.MongoDB;
@@ -15,7 +17,6 @@ import org.melonbrew.fe.database.databases.SQLiteDB;
 import org.melonbrew.fe.listeners.FePlayerListener;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -23,11 +24,13 @@ public class Fe extends JavaPlugin {
     private final Set<Database> databases;
     private API api;
     private Database database;
+    private Synchronization synchronization;
     private double currentVersion;
 
     private double latestVersion;
 
     private String latestVersionString;
+	public String outgoingChannel, incomingChannel = "BungeeCord";
 
     public Fe() {
         databases = new HashSet<Database>();
@@ -71,6 +74,8 @@ public class Fe extends JavaPlugin {
         saveConfig();
 
         api = new API(this);
+        
+        synchronization = new Synchronization(this);
 
         if (!setupDatabase()) {
             return;
@@ -89,6 +94,9 @@ public class Fe extends JavaPlugin {
         new FePlayerListener(this);
 
         setupVault();
+        
+        getServer().getMessenger().registerOutgoingPluginChannel(this, outgoingChannel);
+        getServer().getMessenger().registerIncomingPluginChannel(this, incomingChannel, new FeMessageListener(this));
         
         if (getConfig().getBoolean("updatecheck")) {
             getServer().getScheduler().runTaskAsynchronously(this, new UpdateCheck(this));
@@ -179,6 +187,10 @@ public class Fe extends JavaPlugin {
 
     public API getAPI() {
         return api;
+    }
+    
+    public Synchronization getSynchronization() {
+    	return synchronization;
     }
 
     private boolean setupDatabase() {

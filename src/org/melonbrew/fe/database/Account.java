@@ -54,6 +54,7 @@ public class Account {
 
     public void setMoney(double money) {
         Double currentMoney = getMoney();
+        Double oldMoney = currentMoney;
 
         if (currentMoney != null && currentMoney == money) {
             return;
@@ -73,6 +74,10 @@ public class Account {
             save(currentMoney);
         } else {
             this.money = currentMoney;
+        }
+        
+        if (plugin.getServer().getPlayerExact(getName()) == null) {
+        	plugin.getSynchronization().castTransaction(this, currentMoney - oldMoney);
         }
     }
 
