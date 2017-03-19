@@ -116,7 +116,7 @@ public enum Phrase {
         return parse(params).replace(" ", "");
     }
 
-    private String parseWithPrefix(String... params) {
+    public String parseWithPrefix(String... params) {
         return plugin.getMessagePrefix().replace("$1", plugin.getConfig().getString("prefix")) + parse(params);
     }
 

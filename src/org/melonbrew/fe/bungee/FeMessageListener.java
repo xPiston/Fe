@@ -35,16 +35,20 @@ public class FeMessageListener implements PluginMessageListener {
 			try {
 				if (msgin.readUTF().equals("Transaction")) {
 					String name = msgin.readUTF();
-					String uuid = msgin.readUTF();
-					double amount = msgin.readDouble();
+					//String uuid = msgin.readUTF();
 					
-					if (plugin.getServer().getPlayer(UUID.fromString(uuid)) == null)
+					double amount = msgin.readLong() / 100;
+										
+					if (name == "\0" || name == "")
 						return;
 					
-					plugin.getAPI().getAccount(name, uuid).deposit(amount);
+					if (plugin.getServer().getPlayerExact(name) == null)
+						return;
+					
+					plugin.getAPI().getAccount(name, null).deposit(amount);
 					
 					if (plugin.getConfig().getBoolean("debug", false))
-						plugin.log("Bungee transaction: name=" + name + ", uuid=" + uuid + ", amount=" + amount);
+						plugin.log("Incoming bungee transaction: name=" + name + ", amount=" + amount);
 				}
 			}
 			catch (Exception e) {

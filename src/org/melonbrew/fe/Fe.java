@@ -30,7 +30,8 @@ public class Fe extends JavaPlugin {
     private double latestVersion;
 
     private String latestVersionString;
-	public String outgoingChannel, incomingChannel = "BungeeCord";
+	public String outgoingChannel = "BungeeCord";
+	public String incomingChannel = "BungeeCord";
 
     public Fe() {
         databases = new HashSet<Database>();

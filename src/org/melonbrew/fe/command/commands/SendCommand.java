@@ -71,6 +71,11 @@ public class SendCommand extends SubCommand {
         if (receiverPlayer != null) {
             Phrase.MONEY_RECEIVE.sendWithPrefix(receiverPlayer, formattedMoney, sender.getName());
         }
+        else {
+        	String message = Phrase.MONEY_RECEIVE.parseWithPrefix(formattedMoney, sender.getName());
+        	
+        	plugin.getSynchronization().sendMessage(receiver.getName(), message);
+        }
 
         return true;
     }
