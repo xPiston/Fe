@@ -1,9 +1,6 @@
 name: Fe
-
-main: org.melonbrew.fe.Fe
-
-version: ${project.version}-b${BUILD_NUMBER}
-
+main: io.loyloy.fe.Fe
+version: ${project.version}
 load: startup
 
 commands:
