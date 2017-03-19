@@ -1,5 +1,6 @@
 package io.loyloy.fe;
 
+import io.loyloy.fe.bungee.FeMessageListener;
 import io.loyloy.fe.bungee.Synchronization;
 import io.loyloy.fe.database.Account;
 import io.loyloy.fe.database.Database;
@@ -86,6 +87,9 @@ public class Fe extends JavaPlugin
 
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents( new FePlayerListener( this ), this );
+        
+		getServer().getMessenger().registerOutgoingPluginChannel(this, incomingChannel);
+		getServer().getMessenger().registerIncomingPluginChannel(this, outgoingChannel, new FeMessageListener(this));
 
         setupVault();
 

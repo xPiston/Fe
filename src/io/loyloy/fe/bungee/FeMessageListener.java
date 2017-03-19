@@ -38,7 +38,7 @@ public class FeMessageListener implements PluginMessageListener {
 					//String uuid = msgin.readUTF();
 					
 					double amount = msgin.readLong() / 100;
-										
+					
 					if (name == "\0" || name == "")
 						return;
 					

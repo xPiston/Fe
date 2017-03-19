@@ -3,7 +3,6 @@ package io.loyloy.fe.bungee;
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 
-import org.bukkit.command.CommandSender;
 import io.loyloy.fe.Fe;
 import io.loyloy.fe.database.Account;
 import io.loyloy.fe.util.PluginMessageTask;
