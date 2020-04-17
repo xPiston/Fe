@@ -1,0 +1,53 @@
+# Do NOT remove $1 and $2 variables, k thanks
+DATABASE_TYPE_DOES_NOT_EXIST: That database type doesn't exist.
+DATABASE_FAILURE_DISABLE: Database initialization has failed, disabling Fe.
+COMMAND_NEEDS_ARGUMENTS: That command needs arguments.
+COMMAND_NOT_CONSOLE: The command '$1' cannot be used in the console.
+NO_PERMISSION_FOR_COMMAND: Sorry, you do not have permission to use that command.
+ACCOUNT_HAS: $1 has $2
+YOU_HAVE: You have $1
+HELP: Fe Help
+HELP_ARGUMENTS: $1 Required, $2 Optional
+RICH: Rich List
+STARTING_UUID_CONVERSION: Starting UUID conversion.
+UUID_CONVERSION_FAILED: UUID conversion failed, disabling Fe!
+UUID_CONVERSION_SUCCEEDED: UUID conversion has succeeded!
+CONFIG_RELOADED: The config has been reloaded.
+NOT_ENOUGH_MONEY: You don't have enough money.
+ACCOUNT_DOES_NOT_EXIST: Sorry, that account does not exist.
+YOUR_ACCOUNT_DOES_NOT_EXIST: You don't have an account.
+ACCOUNT_EXISTS: That account already exists.
+ACCOUNT_CREATED: An account for $1 has been created.
+ACCOUNT_REMOVED: An account for $1 has been removed.
+MONEY_RECEIVE: You've received $1 from $2.
+MONEY_SENT: You've sent $1 to $2
+MAX_BALANCE_REACHED: $1 has reached the maximum balance.
+PLAYER_SET_MONEY: You've set $1's balance to $2.
+PLAYER_GRANT_MONEY: You've granted $1 to $2.
+PLAYER_GRANTED_MONEY: $2 granted you $1.
+PLAYER_DEDUCT_MONEY: You've deducted $1 from $2.
+PLAYER_DEDUCTED_MONEY: $2 deducted $1 from your account.
+ACCOUNT_CREATED_GRANT: Created an account for $1 and granted it $2
+NO_ACCOUNTS_EXIST: No accounts exist.
+NAME_TOO_LONG: Sorry that name is too long.
+ACCOUNT_CLEANED: All accounts with the default balance have been removed.
+TRY_COMMAND: Try $1
+
+# '&' doesn't work, use '§'
+PRIMARY_COLOR: §6
+SECONDARY_COLOR: §7
+TERTIARY_COLOR: §8
+ARGUMENT_COLOR: §e
+
+# The descriptions of the commands
+COMMAND.BALANCE: Checks your balance
+COMMAND.SEND: Sends another player money
+COMMAND.TOP: Checks the top 5 richest players
+COMMAND.HELP: Gives you help
+COMMAND.CREATE: Creates an account
+COMMAND.REMOVE: Removes an account
+COMMAND.SET: Set a player's balance
+COMMAND.GRANT: Grants a player money
+COMMAND.DEDUCT: Deducts money from a player
+COMMAND.CLEAN: Cleans the accounts with default balance
+COMMAND.RELOAD: Reloads the config
